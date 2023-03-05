@@ -19,9 +19,7 @@ const Cart = props =>{
     const cartItemAddHandler =(item) => {
         cartCtx.addItem({...item, amount:1});
     };
-    const clearCartHandler=(item)=>{
-        cartCtx.clearItem(item);
-    }
+    
 
     const onClickHander=()=>{
         setIsOrder(true)
@@ -50,7 +48,7 @@ const Cart = props =>{
     price={item.price} 
     onRemove={cartItemRemoveHandler.bind(null,item.id)}
     onAdd={cartItemAddHandler.bind(null,item)}
-    // onClear={clearCartHandler.blind(null,item)}
+    
     />
     
     ))}
