@@ -11,7 +11,7 @@ const Header = props =>{
                 <h1>RactMeals</h1>
                 <HeaderCartButton onClick={props.onShowCart}/>
             </header>
-            <div className={classes.mainimage}>
+            <div className={classes['main-image']}>
                 <img src= {mealsImage} alt="delicious foods"/>
             </div>
         </Fragment>
