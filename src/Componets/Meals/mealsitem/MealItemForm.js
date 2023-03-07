@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+// import Cart from '../../Cart/cart';
 import Input from '../../UI/input';
 import classes from './MealItemForm.module.css';
 const MealItemForm = props =>{
@@ -12,7 +13,7 @@ const MealItemForm = props =>{
 
         if(enteredAmount.trim().length === 0 || 
         enteredAmountNumber < 1 ||
-         enteredAmountNumber > 5)
+         enteredAmountNumber > 10000000000)
          {
             setAmountIsValid(false);
             return;
@@ -28,13 +29,16 @@ const MealItemForm = props =>{
             id:'amount',
             type:'number',
             min:'1',
-            max:'5',
+            max:'',
             step:'1',
             defaultvaluue:'1'
 
         }}/> 
+        
+
            <button>+ Add</button>
-           {!amountIsValid && <p>Please enter a valid amount (1-5)</p>}
+           {!amountIsValid && <p>Please enter a valid amount </p>}
+            
         </form>
     )
 };

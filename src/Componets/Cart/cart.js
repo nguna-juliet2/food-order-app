@@ -8,16 +8,40 @@ import Checkout from './CheckoutForm';
 const Cart = props =>{
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [didSumit, setDidSumit] = useState(false)
-
     const [isOrder, setIsOrder]= useState(false);
+    
+     
+
     const cartCtx = useContext(CartContext);
     const totalAmount =  `$${cartCtx.totalAmount.toFixed(2)}`;
     const hasItems = cartCtx.items.length > 0;
+    // const saveCartItemsToLocalStorage = () => {
+    //     localStorage.setItem('cartItems', JSON.stringify(cartCtx.items));
+    //   };
+ 
+    // useEffect(() => {
+    //     window.addEventListener('beforeunload', saveCartItemsToLocalStorage);
+    
+    //     return () => {
+    //       window.removeEventListener('beforeunload', saveCartItemsToLocalStorage);
+    //     };
+    //   }, [saveCartItemsToLocalStorage]);
+    
+ 
+
+   
+
+
     const cartItemRemoveHandler = (id)=> {
         cartCtx.removeItem(id);
+     
+         
     };
     const cartItemAddHandler =(item) => {
         cartCtx.addItem({...item, amount:1});
+        
+
+        
     };
     
 
@@ -34,11 +58,17 @@ const Cart = props =>{
             })
         });
         setIsSubmitting(false);
-        setDidSumit(true)
+        setDidSumit(true);
         cartCtx.clearCart();
+        
+     
     };
-
-    const cartItem = ( <ul className={classes['cart-items']}>
+    let CartItemContent = (
+        <p>Your Cart is Empty</p>
+    );
+    if (hasItems){
+        CartItemContent = (
+             <ul className={classes['cart-items']}>
          
     {cartCtx.items.map(item => (
     <CartItem 
@@ -46,13 +76,18 @@ const Cart = props =>{
     name={item.name} 
     amount={item.amount}
     price={item.price} 
+    Image={item.img}
     onRemove={cartItemRemoveHandler.bind(null,item.id)}
     onAdd={cartItemAddHandler.bind(null,item)}
     
     />
     
     ))}
-    </ul>);
+    </ul>
+        );
+    }
+
+     
     const modalActions= <div className={classes.actions}>
     <button className={classes['button--alt']} onClick={props.onClose}>close</button>
     {hasItems&&<button className={classes.button} onClick={onClickHander}>order</button>}
@@ -60,27 +95,31 @@ const Cart = props =>{
 </div>
 
 const cartModalcontent = (<React.Fragment>
-       {cartItem}
-            <div className={classes.total}>
-                <span>Total Amount</span>
-                <span>{totalAmount}</span>
-            </div >
-            {isOrder&&<Checkout  onConfrim ={submitOrderHandler} onCancel={props.onClose}/>}
+       {CartItemContent}
+       {hasItems && (
+        <div className={classes.total}>
+        <span>Total Amount</span>
+        <span>{totalAmount}</span>
+    </div >
+       )}
+            
+            {isOrder&&<Checkout  onConfrim ={submitOrderHandler} onCancel={props.onClose}  onEmptyCart={props.CartIsEmpty}/>}
             {!isOrder && modalActions}
 </React.Fragment>);
-const isSubmittingModalContent= <p>Sendind order data..</p>
+const isSubmittingModalContent= <p>Sending order data..</p>
 const didSumitModalContent = <React.Fragment>
 <p>Successfully sent the order! </p>
 <div className={classes.actions}>
-    <button className={classes['button--alt']} onClick={props.onClose}>close</button> </div>
+   <button className={classes['button--alt']} onClick={props.onClose}>close</button> </div>
     </React.Fragment>
     return(
         
         <Modal onClose={props.onClose}>
          
-            {!isSubmitting&& !didSumit&& cartModalcontent}
-            {isSubmitting && isSubmittingModalContent }
-            {!isSubmitting && didSumit&& didSumitModalContent}
+            {!isSubmitting&& !didSumit&&  cartModalcontent }
+            {isSubmitting && isSubmittingModalContent  }
+            {!isSubmitting && didSumit&&  didSumitModalContent   }
+            
 
         </Modal>
     )

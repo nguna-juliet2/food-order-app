@@ -5,6 +5,13 @@ const defaultCartState = {
     totalAmount: 0,
 
 }
+  
+ 
+
+
+
+
+
 const CartReducer=(state, action)=>{
     if (action.type === 'ADD'){
         

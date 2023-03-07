@@ -5,6 +5,7 @@ const isEmpty = value => value.trim() ==="";
 const isFiveChars = value => value.trim().length === 5 ;
 
 const Checkout = (props) => {
+    // const [CartIsEmpty, SetIsCartEmpty]= useState(false);
     const [isformInputValidity, setIsFormInputValidity]= useState({
         name:true,
         street:true,
@@ -12,6 +13,12 @@ const Checkout = (props) => {
         city:true,
         
     })
+
+  //   const onClickHander=()=>{
+  //     SetIsCartEmpty(false)
+  // };
+
+
     const nameInputRef = useRef();
     const streetInputRef = useRef();
     const postalcodeInputRef = useRef();
@@ -83,7 +90,11 @@ const cityControlClasses= `${classes.control}
         <button type='button' onClick={props.onCancel}>
           Cancel
         </button>
-        <button className={classes.submit}>Confirm</button>
+        <div>
+        <button className={classes.submit}   >Confirm</button>
+        
+        </div>
+        
       </div>
     </form>
   );
